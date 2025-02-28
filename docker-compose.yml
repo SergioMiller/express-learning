@@ -1,0 +1,39 @@
+services:
+    postgres:
+        container_name: express-learning-postgres
+        image: postgres
+        volumes:
+            - express_learning_postgres_data:/var/lib/postgresql/data:cached
+        environment:
+            POSTGRES_DB: ${DB_DATABASE:-app}
+            POSTGRES_USER: ${DB_USERNAME:-postgres}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+            PGDATA: /data/postgres
+        ports:
+            - ${DOCKER_POSTGRES_PORT:-5432}:5432
+        restart: unless-stopped
+        networks:
+            - express_learning_network
+
+    node:
+        container_name: express-learning-node
+        image: node:latest
+        restart: always
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        environment:
+            APP_URL: ${APP_URL:-3000}
+        ports:
+            - 3000:3000
+        command: npm run dev
+
+volumes:
+    express_learning_postgres_data:
+networks:
+    express_learning_network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                -   subnet: 192.168.12.0/24
