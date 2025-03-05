@@ -1,22 +1,46 @@
+import userRepository from "../repositories/userRepository.js";
+
 class UserController {
-    index(req, res) {
-        res.send('user list')
+    async index(req, res) {
+        const users = await userRepository.getAll()
+
+        res.json({data: users})
     }
 
-    create(req, res) {
-        res.send('user create')
+    async create(req, res) {
+        const user = await userRepository.create(req.body)
+
+        res.json({data: user})
     }
 
-    get(req, res) {
-        res.send('user get')
+    async get(req, res) {
+        const user = await userRepository.get(parseInt(req.params.id))
+
+        if (null === user) {
+            res.json(404, {message: 'Not found.'})
+        }
+
+        res.json({data: user})
     }
 
-    update(req, res) {
-        res.send('user update')
+    async update(req, res) {
+        try {
+            const user = await userRepository.update(parseInt(req.params.id), req.body)
+
+            res.json({data: user})
+        } catch (PrismaClientKnownRequestError) {
+            res.json(404, {message: 'Not found.'})
+        }
     }
 
-    delete(req, res) {
-        res.send('user delete')
+    async delete(req, res) {
+        try {
+            await userRepository.delete(parseInt(req.params.id))
+
+            res.json()
+        } catch (PrismaClientKnownRequestError) {
+            res.json(404, {message: 'Not found.'})
+        }
     }
 }
 
