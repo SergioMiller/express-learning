@@ -1,20 +1,20 @@
 services:
-    node:
-        container_name: express-learning-node
-        image: node:latest
-        restart: always
-        working_dir: /var/www
-        volumes:
-            - ./:/var/www
-        environment:
-            APP_URL: ${APP_URL:-3000}
-        ports:
-            - 3000:3000
-        command: npm run dev
-        networks:
-            - express_learning_network
-        depends_on:
-            - postgres
+#    node:
+#        container_name: express-learning-node
+#        image: node:latest
+#        restart: always
+#        working_dir: /var/www
+#        volumes:
+#            - ./:/var/www
+#        environment:
+#            APP_URL: ${APP_URL:-3000}
+#        ports:
+#            - 3000:3000
+#        command: npm run dev
+#        networks:
+#            - express_learning_network
+#        depends_on:
+#            - postgres
 
     postgres:
         container_name: express-learning-postgres

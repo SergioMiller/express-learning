@@ -7,7 +7,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only --exit-child --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register index.ts"
+    "dev": "ts-node-dev --watch --transpile-only  --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register index.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
